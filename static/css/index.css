@@ -56,7 +56,7 @@ body {margin:0 auto;overflow:hidden;}
 	z-index:30;
 	top:420px;
 	left: 50%;
-	margin-left: -400px;
+	margin-left: -420px;
 	}
 .header .nav1{
 	width:804px;
@@ -65,7 +65,7 @@ body {margin:0 auto;overflow:hidden;}
 	z-index:30;
 	top:520px;
 	left: 50%;
-	margin-left: -400px;
+	margin-left: -420px;
 	}
 .header .nav a.gv {
 	text-decoration:none;
