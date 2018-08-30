@@ -5,7 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 @login_required
 def myaccount(request):
-    return HttpResponse('my account')
+    return render(request, 'accounts/about-us.html')
 
 
 

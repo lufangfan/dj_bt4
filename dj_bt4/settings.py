@@ -157,5 +157,5 @@ SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'   # 允许使用用户名或者邮箱登录
 ACCOUNT_EMAIL_VERIFICATION = 'none'   # 取消注册邮箱验证机制
 LOGIN_REDIRECT_URL = '/accounts/myaccount/'   # 登录跳转到首页
-ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SESSION_REMEMBER = False
 

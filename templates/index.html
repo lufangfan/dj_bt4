@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load staticfiles %}
 
 <!doctype html>
@@ -30,7 +31,7 @@
 		</div>
 
 		<div class="nav1">
-			<a class="gv1" href="#" style="margin-left: 337px;">如何加入</a>
+			<a class="gv1" href="#" style="margin-left: 337px;" data-toggle="modal" data-target="#signupModal">如何加入</a>
 		</div>
 
 		<div class="canvaszz"></div>
@@ -125,6 +126,81 @@
 	</div>
 </div>
 <!-- Modal Login -->
+
+<!-- Modal Signup -->
+<div class="modal fade  bd-example-modal-lg" id="signupModal" tabindex="-1" role="dialog"
+     aria-labelledby="signupModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-4 offset-4 col-sm-4 offset-sm-4 col-md-4 offset-md-4 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
+							<img class="img-fluid" alt="Responsive image" src="{% static 'images/ETO1.ico' %}">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-8 offset-2 text-center">
+							<p class="h5" style="font-family: 'Josefin Sans'; color: #08415c"> "Signup!" </p>
+						</div>
+					</div>
+
+{#					<div class="row">#}
+{#						<div class="col-md-12"#}
+{#						     style="float: none;display: block;margin-left: auto;margin-right: auto; height: 2.7%;text-align: center;">#}
+{#							<p style="font-family: 'Josefin Sans'; color: #08415c;margin-bottom: 5px;"> "or, login#}
+{#								here:" </p>#}
+{#						</div>#}
+{#					</div>#}
+					<div class="row">
+						<div class="col-md-8 offset-md-2">
+							<form action="/accounts/signup/" method="POST" id="signup_form">
+								{% csrf_token %}
+
+								<div class="input-group-sm mb-3 ">
+									<input type="text" autofocus="autofocus" required="required" class="form-control"
+									       id="id_username" name="username" placeholder="{% trans "Username" %}"
+									       class="form-control" style="border-radius:50px;">
+								</div>
+								<div class="input-group-sm mb-3">
+									<input id="id_email" name="email" title="" type="email"
+									       placeholder="{% trans "Email" %}" class="form-control"
+									       style="border-radius:50px;">
+								</div>
+								<div class="input-group-sm mb-3">
+									<input required="required" id="id_password1" name="password1" type="password"
+									       placeholder="{% trans "Password" %}" class="form-control"
+									       style="border-radius:50px;">
+								</div>
+								<div class="input-group-sm mb-1">
+									<input required="required" id="id_password2" name="password2" type="password"
+									       placeholder="{% trans "re-enter password" %}" class="form-control"
+									       style="border-radius:50px;">
+								</div>
+
+
+								<div class="row" style="margin-top: 15px;">
+									<div class="col-md-6 offset-md-3 col-sm-4 offset-sm-4 col-4 offset-4">
+										<div class="form-group">
+											<button type="submit" class="btn btn-danger btn-sm btn-block"
+											        style="font-family: 'Josefin Sans';border-radius:20px;background-color:#fe5554;box-shadow:2px 4px 6px #ed3c3b; border-style: none;color: #FFFFFF;">
+												Signup
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Modal Signup -->
 
 </body>
 
