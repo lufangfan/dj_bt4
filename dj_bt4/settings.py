@@ -155,7 +155,23 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'   # 允许使用用户名或者邮箱登录
-ACCOUNT_EMAIL_VERIFICATION = 'none'   # 取消注册邮箱验证机制
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'   # 注册邮箱验证机制
 LOGIN_REDIRECT_URL = '/accounts/myaccount/'   # 登录跳转到首页
-ACCOUNT_SESSION_REMEMBER = False
+ACCOUNT_SESSION_REMEMBER = None
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# 配置邮箱发邮件的相关功能
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# smtp服务的邮箱服务器 我用的是163
+EMAIL_HOST = 'smtp.163.com'
+# smtp服务固定的端口是25
+EMAIL_PORT = 25
+#发送邮件的邮箱
+EMAIL_HOST_USER = 'lufangfan_py@163.com'
+#在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'lff199248'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

@@ -67,6 +67,15 @@ body {margin:0 auto;overflow:hidden;}
 	left: 50%;
 	margin-left: -420px;
 	}
+.header .nav-confirm{
+	width:804px;
+	height:auto;
+	position:absolute;
+	z-index:30;
+	top:520px;
+	left: 50%;
+	margin-left: -420px;
+	}
 .header .nav a.gv {
 	text-decoration:none;
 	background:url(../images/nav_gv.png) repeat 0px 0px;

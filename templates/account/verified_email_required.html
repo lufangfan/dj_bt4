@@ -1,0 +1,14 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{#{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}#}
+
+{% block confirm_email %}
+"Verify Your E-mail Address"
+
+{% url 'account_email' as email_url %}
+
+
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}机智的{{ user_display }}！
+欢迎申请加入ETO！
+点击下面的链接完成身份验证, {{ activate_url }}。
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}不要回复!不要回复!不要回复!
+{% endblocktrans %}
