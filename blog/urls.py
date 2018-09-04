@@ -17,9 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from accounts import views
+from blog import views
 
 urlpatterns = [
-    url(r'^myaccount/', views.myaccount, name="myaccount"),
-    
+    url(r'^blog_page/', views.blog_page, name="blog_page"),
 ]

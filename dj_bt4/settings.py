@@ -45,6 +45,7 @@ PREREQ_APPS = [
 
 PROJECT_APPS = [
     'accounts',
+    'blog',
 ]
 
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
@@ -123,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -141,6 +142,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 
 )
+#  MyProject.settings.py 里面设置MEDIA_ROOT and MEDIA_URL
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
 
 # django-allauth  configuration
 AUTHENTICATION_BACKENDS = (
@@ -156,7 +161,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'   # 允许使用用户名或者邮箱登录
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'   # 注册邮箱验证机制
-LOGIN_REDIRECT_URL = '/accounts/myaccount/'   # 登录跳转到首页
+LOGIN_REDIRECT_URL = '/blog/myaccount/'   # 登录跳转到首页
 ACCOUNT_SESSION_REMEMBER = None
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
 ACCOUNT_EMAIL_REQUIRED = True
