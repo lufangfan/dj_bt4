@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^test$', TemplateView.as_view(template_name='test.html'), name='landing_test'),
     url(r'^blog/', include('accounts.urls')),
     url(r'^blog/', include('blog.urls')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
