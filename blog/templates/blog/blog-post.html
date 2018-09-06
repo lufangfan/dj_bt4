@@ -1,10 +1,10 @@
 {% extends 'blog/blog-base.html' %}
 {% load static %}
 {% block extrahead %}
-<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
-<link rel="stylesheet" href="{% static 'blog/css/prism.css' %}">
-{{ block.super }}
+	<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+	<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'blog/css/prism.css' %}">
+	{{ block.super }}
 {% endblock %}
 {% block  wrapper_content %}
 	<div class="section">
@@ -139,14 +139,15 @@
 						<div class="media media-post">
 							<a class="pull-left author" href="#">
 								<div class="avatar">
-									<img class="media-object" alt="64x64" src="../assets/img/default-avatar.png">
+									<img class="media-object" alt="64x64"
+									     src="{{ request.user.userprofile.avatar.url }}">
 								</div>
 							</a>
 							<div class="media-body">
 								<textarea class="form-control" placeholder="Write some nice stuff or nothing..."
 								          rows="6"></textarea>
 								<div class="media-footer">
-									<a href="#" class="btn btn-info btn-round btn-fill btn-wd pull-right">Post
+									<a href="#" class="btn btn-info btn-round btn-fill btn-wd pull-right" onclick="post_comment();return false;">Post
 										Comment</a>
 								</div>
 							</div>
@@ -156,4 +157,13 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+{% block extrajs %}
+	<script type="text/javascript">
+{#		$(function () {#}
+			function post_comment(){
+				alert('hah');
+			}
+{#		});#}
+	</script>
 {% endblock %}

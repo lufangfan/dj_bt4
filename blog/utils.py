@@ -4,7 +4,7 @@ import uuid
 
 def get_file_path(instance, filename):
     """
-    Function: common function to generate unique filename for all file resources, including courseware, homework etc
+    Function: common function to generate unique filename for all file resources
 
     Description:
         It will be called when file is uploaded and save the model. Once model is saved, file will be renamed
