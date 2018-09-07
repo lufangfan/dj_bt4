@@ -58,6 +58,18 @@ class Article(models.Model):
         return self.title
 
 
+class CommentManager(models.Manager):
+    
+    def submit_comment(self, user_id, article_id, content, pid=0):
+        comment = Comment()
+        comment.content = content
+        comment.user_id = user_id
+        comment.article_id = article_id
+        comment.save()
+        comment.pid = comment
+        comment.save()
+        return comment
+    
 # 评论模型
 class Comment(models.Model):
     content = models.TextField(verbose_name='评论内容')
@@ -66,10 +78,12 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, blank=True, null=True, verbose_name='文章')
     pid = models.ForeignKey('self', blank=True, null=True, verbose_name='父级评论')
 
+    objects = CommentManager()
+    
     class Meta:
         verbose_name = '评论'
         verbose_name_plural = verbose_name
-        ordering = ['-date_publish']
+        ordering = ['date_publish']
 
     def __str__(self):
         return str(self.id)

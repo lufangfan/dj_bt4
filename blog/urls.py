@@ -22,4 +22,5 @@ from blog import views
 urlpatterns = [
     url(r'^blog_page/', views.blog_page, name="blog_page"),
     url(r'^blog_post/(?P<pk>[0-9]+)/$', views.blog_post, name="blog_post"),
+    url(r'^comment_submit/', views.comment_submit, name="comment_submit"),
 ]
