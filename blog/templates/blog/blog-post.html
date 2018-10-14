@@ -5,15 +5,15 @@
 	<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
 	<link rel="stylesheet" href="{% static 'blog/css/prism.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lobibox/css/lobibox.css' %}">
-	<link rel="stylesheet"  href="{% static 'lobibox/css/Lobibox.min.css' %}" />
-{#	{{ block.super }}#}
+	<link rel="stylesheet" href="{% static 'lobibox/css/Lobibox.min.css' %}"/>
+	{#	{{ block.super }}#}
 {% endblock %}
 {% block  wrapper_content %}
 	<div class="section">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 bottom-border">
-					<h1 class="title title-blog">{{ article.title }}</h1>
+				<div class="col-md-8 bottom-border　text-center">
+					<h1 class="title title-blog" style="text-align:center;">{{ article.title }}</h1>
 					{{ article.content | safe }}
 				</div>
 
@@ -68,28 +68,47 @@
 				<div class="col-md-8 ">
 					<div class="media-area">
 						{% for comment in comments %}
-						<div class="media">
-							<a class="pull-left" href="#">
-								<div class="avatar">
-									<img class="media-object" src="{{ comment.user.userprofile.avatar.url }}" alt="...">
-								</div>
-							</a>
-							<div class="media-body">
-								<h4 class="media-heading">{{ comment.user.userprofile.nickname }}</h4>
-								<h6 class="pull-right text-muted">{{ comment.date_publish|date:"Y-m-d H:i:s" }}</h6>
+							<div class="media">
+								<a class="pull-left" href="#">
+									<div class="avatar">
+										<img class="media-object" src="{{ comment.user.userprofile.avatar.url }}"
+										     alt="...">
+									</div>
+								</a>
+								<div class="media-body">
+									<h4 class="media-heading">{{ comment.user.userprofile.nickname }}</h4>
+									<h6 class="pull-right text-muted">{{ comment.date_publish|date:"Y-m-d H:i:s" }}</h6>
 
-								<p>{{ comment.content }}</p>
+									<p>{{ comment.content }}</p>
 
-								<div class="media-footer">
-									{% ifnotequal request.user comment.user %}
-									<a href="#" class="btn btn-info btn-simple "> <i class="fa fa-reply"></i> Reply</a>
-									{% endifnotequal %}
-									<a href="#" class="btn btn-danger btn-simple pull-right">
-										<i class="fa fa-heart"></i> 243
-									</a>
+									<div class="media-footer">
+										{% ifnotequal request.user comment.user %}
+											<a href="#" class="btn btn-info btn-simple "
+											   onclick="replay(this);return false;"> <i class="fa fa-reply"></i>
+												Reply</a>
+										{% endifnotequal %}
+										<a href="#" class="btn btn-danger btn-simple pull-right">
+											<i class="fa fa-heart"></i> 243
+										</a>
+									</div>
+									<div class="media media-post" style="display: none;">
+										<a class="pull-left author" href="#">
+											<div class="avatar">
+												<img class="media-object" alt="64x64"
+												     src="{{ request.user.userprofile.avatar.url }}">
+											</div>
+										</a>
+										<div class="media-body">
+											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～" rows="6"></textarea>
+											<div class="media-footer">
+												<a href="#" class="btn btn-info btn-round btn-fill btn-wd pull-right"
+												   onclick="post_comment();return false;">Post
+													Comment</a>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div> <!-- end media -->
+							</div><!-- end media -->
 						{% endfor %}
 						<!--  Comment                    -->
 						<div class="media">
@@ -167,6 +186,14 @@
 	<script src="{% static 'lobibox/js/lobibox.min.js' %}"></script>
 
 	<script type="text/javascript">
+		$(document).ready(function () {
+			$("div img").addClass('img-responsive');
+			$("div img").attr('style', 'height:auto');
+			$("div img").wrap("<a></a>");
+			$("div img").each(function () {
+				$(this).wrap("<a target='_Blank' href=" + $(this).attr("src") + "></a>");
+			});
+		});
 
 		function post_comment() {
 			var comment = $('#comment').val();
@@ -191,37 +218,37 @@
 					},
 					//成功返回之后调用的函数
 					success: function (data) {
-{#						console.log(data);#}
-{#						console.log(data['comment']['nickname']);#}
+						{#						console.log(data);#}
+						{#						console.log(data['comment']['nickname']);#}
 						var nickname = data['comment']['nickname'];
 						var avatar = data['comment']['avatar'];
 						var content = data['comment']['content'];
-						var date_publish = data['comment']['date_publish'].split('T')[0]+' '+data['comment']['date_publish'].split('T')[1].split('.')[0];
-{#						console.log(date_publish);#}
+						var date_publish = data['comment']['date_publish'].split('T')[0] + ' ' + data['comment']['date_publish'].split('T')[1].split('.')[0];
+						{#						console.log(date_publish);#}
 						var comment_html = '<div class="media">' +
 							'<a class="pull-left" href="#">' +
-								'<div class="avatar">' +
-									'<img class="media-object" src=" '+avatar+' " alt="...">' +
-								'</div>' +
+							'<div class="avatar">' +
+							'<img class="media-object" src=" ' + avatar + ' " alt="...">' +
+							'</div>' +
 							'</a>' +
 							'<div class="media-body">' +
-								'<h4 class="media-heading">'+nickname+'</h4>' +
-								'<h6 class="pull-right text-muted">'+date_publish+'</h6>' +
+							'<h4 class="media-heading">' + nickname + '</h4>' +
+							'<h6 class="pull-right text-muted">' + date_publish + '</h6>' +
 
-								'<p>'+content+'</p>' +
+							'<p>' + content + '</p>' +
 
-								'<div class="media-footer">' +
+							'<div class="media-footer">' +
 
-									'<a href="#" class="btn btn-danger btn-simple pull-right">' +
-										'<i class="fa fa-heart"></i> 243' +
-									'</a>' +
-								'</div>' +
+							'<a href="#" class="btn btn-danger btn-simple pull-right">' +
+							'<i class="fa fa-heart"></i> 243' +
+							'</a>' +
 							'</div>' +
-						'</div>';
-{#						console.log(comment_html);#}
+							'</div>' +
+							'</div>';
+						{#						console.log(comment_html);#}
 						$(comment_html).insertBefore('.media-post');
 						$("#comment").val('');
-{#						console.log('???');#}
+						{#						console.log('???');#}
 					},
 					//调用执行后调用的函数
 					complete: function (XMLHttpRequest, textStatus) {
@@ -238,5 +265,8 @@
 			}
 		}
 
+		function replay(obj) {
+			$(obj).parent().next().toggle();
+		}
 	</script>
 {% endblock %}
