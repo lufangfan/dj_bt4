@@ -10,7 +10,7 @@ from blog.models import Article, Comment
 from blog.serializers import CommentSerializer
 
 
-@login_required
+
 def blog_page(request):
     articles = Article.objects.all().order_by('-date_publish')
     context = {'articles': articles, 'user': request.user}

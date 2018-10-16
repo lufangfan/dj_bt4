@@ -6,13 +6,13 @@
 	<link rel="stylesheet" href="{% static 'blog/css/prism.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lobibox/css/lobibox.css' %}">
 	<link rel="stylesheet" href="{% static 'lobibox/css/Lobibox.min.css' %}"/>
-	{#	{{ block.super }}#}
+		{{ block.super }}
 {% endblock %}
 {% block  wrapper_content %}
 	<div class="section">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 bottom-border　text-center">
+				<div class="col-md-8 bottom-border　text-center" style="border-bottom: 1px solid #DDDDDD;">
 					<h1 class="title title-blog" style="text-align:center;">{{ article.title }}</h1>
 					{{ article.content | safe }}
 				</div>
