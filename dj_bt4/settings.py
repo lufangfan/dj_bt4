@@ -46,6 +46,7 @@ PREREQ_APPS = [
 PROJECT_APPS = [
     'accounts',
     'blog',
+    'blog.templatetags',
 ]
 
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
@@ -158,7 +159,7 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # 允许使用用户名或者邮箱登录
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # 注册邮箱验证机制
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 注册邮箱验证机制
 LOGIN_REDIRECT_URL = '/blog/blog_page/'  # 登录跳转到首页
 ACCOUNT_SESSION_REMEMBER = None
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180

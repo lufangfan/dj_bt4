@@ -60,13 +60,15 @@ class Article(models.Model):
 
 class CommentManager(models.Manager):
     
-    def submit_comment(self, user_id, article_id, content, pid=0):
+    def submit_comment(self, user_id, article_id, content, supercomment_id, reply_user_id):
         comment = Comment()
         comment.content = content
         comment.user_id = user_id
         comment.article_id = article_id
-        comment.save()
-        comment.pid = comment
+        if supercomment_id:
+            comment.supercomment_id = supercomment_id
+        if reply_user_id:
+            comment.reply_to_user_id = reply_user_id
         comment.save()
         return comment
     
@@ -76,8 +78,8 @@ class Comment(models.Model):
     date_publish = models.DateTimeField(auto_now_add=True, verbose_name='发布时间')
     user = models.ForeignKey(User, blank=True, null=True, verbose_name='用户')
     article = models.ForeignKey(Article, blank=True, null=True, verbose_name='文章')
-    pid = models.ForeignKey('self', blank=True, null=True, verbose_name='父级评论')
-
+    supercomment_id = models.IntegerField(blank=True, null=True, verbose_name='父级评论id')
+    reply_to_user_id = models.IntegerField(blank=True, null=True, verbose_name='回复用户id')
     objects = CommentManager()
     
     class Meta:

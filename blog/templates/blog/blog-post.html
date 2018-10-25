@@ -1,4 +1,5 @@
 {% extends 'blog/blog-base.html' %}
+{% load posttag %}
 {% load static %}
 {% block extrahead %}
 	<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
@@ -6,13 +7,13 @@
 	<link rel="stylesheet" href="{% static 'blog/css/prism.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'lobibox/css/lobibox.css' %}">
 	<link rel="stylesheet" href="{% static 'lobibox/css/Lobibox.min.css' %}"/>
-		{{ block.super }}
+	{{ block.super }}
 {% endblock %}
 {% block  wrapper_content %}
 	<div class="section">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 bottom-border　text-center" style="border-bottom: 1px solid #DDDDDD;">
+				<div class="col-md-8 bottom-border　text-center" id="article-content" style="border-bottom: 1px solid #DDDDDD;">
 					<h1 class="title title-blog" style="text-align:center;">{{ article.title }}</h1>
 					{{ article.content | safe }}
 				</div>
@@ -36,23 +37,22 @@
 
 
 					<h3 class="title title-blog">Tags </h3>
-					<span class="label label-warning label-fill">Food</span>
-					<span class="label label-warning label-fill">Health</span>
-					<span class="label label-warning label-fill">Lifestyle</span>
-					<span class="label label-warning label-fill">Breakfast</span>
+					{% for tag in tags %}
+					<span class="label label-warning label-fill">{{ tag.name }}</span>
+					{% endfor %}
 
 					<h3 class="title title-blog">Author</h3>
 					<div class="media media-author">
 						<a class="pull-left" href="#">
 							<div class="avatar">
-								<img class="media-object" src="../assets/img/default-avatar.png" alt="...">
+								<img class="media-object" src="{{ article_author.avatar.url }}" alt="...">
 							</div>
 						</a>
 						<div class="media-body">
-							<h6 class="media-heading">Creative Tim</h6>
+							<h6 class="media-heading">{{ article_author.nickname }}</h6>
 							<p class="text-muted">Moderator</p>
 						</div>
-						<p>Tim thinks communication is key and he enjoys all the feedback you give him</p>
+						<p>{{ article.description }}</p>
 						<button class="btn btn-round btn-info btn-sm">
 							Follow
 						</button>
@@ -68,96 +68,197 @@
 				<div class="col-md-8 ">
 					<div class="media-area">
 						{% for comment in comments %}
-							<div class="media">
-								<a class="pull-left" href="#">
-									<div class="avatar">
-										<img class="media-object" src="{{ comment.user.userprofile.avatar.url }}"
-										     alt="...">
-									</div>
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">{{ comment.user.userprofile.nickname }}</h4>
-									<h6 class="pull-right text-muted">{{ comment.date_publish|date:"Y-m-d H:i:s" }}</h6>
-
-									<p>{{ comment.content }}</p>
-
-									<div class="media-footer">
-										{% ifnotequal request.user comment.user %}
-											<a href="#" class="btn btn-info btn-simple "
-											   onclick="replay(this);return false;"> <i class="fa fa-reply"></i>
-												Reply</a>
-										{% endifnotequal %}
-										<a href="#" class="btn btn-danger btn-simple pull-right">
-											<i class="fa fa-heart"></i> 243
-										</a>
-									</div>
-									<div class="media media-post" style="display: none;">
-										<a class="pull-left author" href="#">
-											<div class="avatar">
-												<img class="media-object" alt="64x64"
-												     src="{{ request.user.userprofile.avatar.url }}">
-											</div>
-										</a>
-										<div class="media-body">
-											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～" rows="6"></textarea>
-											<div class="media-footer">
-												<a href="#" class="btn btn-info btn-round btn-fill btn-wd pull-right"
-												   onclick="post_comment();return false;">Post
-													Comment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div><!-- end media -->
-						{% endfor %}
-						<!--  Comment                    -->
-						<div class="media">
-							<a class="pull-left" href="#">
-								<div class="avatar">
-									<img class="media-object" alt="Tim Picture" src="../assets/img/default-avatar.png">
-								</div>
-							</a>
-							<div class="media-body">
-
-								<h4 class="media-heading">Drake</h4>
-								<h6 class="pull-right text-muted">Sep 11, 11:54 AM</h6>
-
-								<p>Hello guys, nice to have you on the platform! There will be a lot of great stuff
-									coming soon. We will keep you posted for the latest news.</p>
-								<p> Don't forget, You're Awesome!</p>
-
-								<div class="media-footer">
-									<a href="#" class="btn btn-info btn-simple "> <i class="fa fa-reply"></i> Reply</a>
-									<a href="#" class="btn btn-default btn-simple pull-right">
-										<i class="fa fa-heart-o"></i> 23
-									</a>
-								</div>
-								<div class="media">
+							{% if not comment.1 %}
+								<div class="media" id="{{ comment.0.id }}">
 									<a class="pull-left" href="#">
 										<div class="avatar">
-											<img class="media-object" alt="64x64"
-											     src="../assets/img/default-avatar.png">
+											<img class="media-object" src="{{ comment.0.user.userprofile.avatar.url }}"
+											     alt="{{ request.user.username }}">
 										</div>
 									</a>
 									<div class="media-body">
-										<h4 class="media-heading">Rick Ross</h4>
-										<h6 class="pull-right text-muted">Sep 11, 11:56 AM</h6>
+										<h4 class="media-heading">{{ comment.0.user.userprofile.nickname }}</h4>
+										<h6 class="pull-right text-muted">{{ comment.0.date_publish|date:"Y-m-d H:i:s" }}</h6>
 
-										<p>Hello guys, nice to have you on the platform! There will be a lot of great
-											stuff coming soon. We will keep you posted for the latest news.</p>
-										<p> Don't forget, You're Awesome!</p>
+										<p>{{ comment.0.content }}</p>
 
 										<div class="media-footer">
-											<a href="#" class="btn btn-info btn-simple "> <i class="fa fa-reply"></i>
-												Reply</a>
+											{% ifnotequal request.user comment.0.user %}
+												<a href="#" class="btn btn-info btn-simple "
+												   onclick="reply(this);return false;"> <i class="fa fa-reply"></i>
+													Reply</a>
+											{% endifnotequal %}
 											<a href="#" class="btn btn-danger btn-simple pull-right">
-												<i class="fa fa-heart"></i> 43
+												<i class="fa fa-heart"></i> 243
 											</a>
 										</div>
+										<div class="media media-post" style="display: none;">
+											<a class="pull-left author" href="#">
+												<div class="avatar">
+													<img class="media-object" alt="64x64"
+													     src="{{ request.user.userprofile.avatar.url }}">
+												</div>
+											</a>
+											<div class="media-body">
+											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～"
+											          rows="6"></textarea>
+												<div class="media-footer">
+													<a href="#"
+													   class="btn btn-info btn-round btn-fill btn-wd pull-right"
+													   onclick="reply_comment(this);return false;">Post
+														Comment</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!-- end media -->
+							{% else %}
+								<div class="media" id="{{ comment.0.id }}">
+									<a class="pull-left" href="#">
+										<div class="avatar">
+											<img class="media-object" alt="{{ request.user.username }}"
+											     src="{{ comment.0.user.userprofile.avatar.url }}">
+										</div>
+									</a>
+									<div class="media-body">
+
+										<h4 class="media-heading">{{ comment.0.user.userprofile.nickname }}</h4>
+										<h6 class="pull-right text-muted">{{ comment.0.date_publish|date:"Y-m-d H:i:s" }}</h6>
+
+										<p>{{ comment.0.content }}</p>
+
+										<div class="media-footer">
+											{% ifnotequal request.user comment.0.user %}
+												<a href="#" class="btn btn-info btn-simple "
+												   onclick="reply(this);return false;"> <i class="fa fa-reply"></i>
+													Reply</a>
+											{% endifnotequal %}
+											<a href="#" class="btn btn-danger btn-simple pull-right">
+												<i class="fa fa-heart"></i> 243
+											</a>
+										</div>
+										<div class="media media-post" style="display: none;">
+											<a class="pull-left author" href="#">
+												<div class="avatar">
+													<img class="media-object" alt="64x64"
+													     src="{{ request.user.userprofile.avatar.url }}">
+												</div>
+											</a>
+											<div class="media-body">
+											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～"
+											          rows="6"></textarea>
+												<div class="media-footer">
+													<a href="#"
+													   class="btn btn-info btn-round btn-fill btn-wd pull-right"
+													   onclick="reply_comment(this);return false;">Post
+														Comment</a>
+												</div>
+											</div>
+										</div>
+										{% for subcomment in comment.1 %}
+											{% if not subcomment.reply_to_user_id %}
+												<div class="media" id="{{ subcomment.id }}" name="{{ subcomment.user.id }}">
+												<a class="pull-left" href="#">
+													<div class="avatar">
+														<img class="media-object" alt="64x64"
+														     src="{{ subcomment.user.userprofile.avatar.url }}">
+													</div>
+												</a>
+												<div class="media-body">
+													<h4 class="media-heading">{{ subcomment.user.userprofile.nickname }}</h4>
+													{#										<h6 class="pull-left text-muted">repaly to lufangfan</h6>#}
+													<h6 class="pull-right text-muted">{{ subcomment.date_publish|date:"Y-m-d H:i:s" }}</h6>
+
+													<p>{{ subcomment.content }}</p>
+
+													<div class="media-footer">
+														{% ifnotequal request.user subcomment.user %}
+															<a href="#" class="btn btn-info btn-simple "
+															   onclick="reply(this);return false;"> <i
+																	class="fa fa-reply"></i>
+																Reply</a>
+														{% endifnotequal %}
+														<a href="#" class="btn btn-danger btn-simple pull-right">
+															<i class="fa fa-heart"></i> 243
+														</a>
+													</div>
+
+													<div class="media media-post" style="display: none;">
+														<a class="pull-left author" href="#">
+															<div class="avatar">
+																<img class="media-object" alt="64x64"
+																     src="{{ request.user.userprofile.avatar.url }}">
+															</div>
+														</a>
+														<div class="media-body">
+											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～"
+											          rows="6"></textarea>
+															<div class="media-footer">
+																<a href="#"
+																   class="btn btn-info btn-round btn-fill btn-wd pull-right"
+																   onclick="reply_user(this);return false;">Post
+																	Comment</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div> <!-- end media -->
+											{% else %}
+												<div class="media" id="{{ subcomment.id }}" name="{{ subcomment.user.id }}">
+												<a class="pull-left" href="#">
+													<div class="avatar">
+														<img class="media-object" alt="64x64"
+														     src="{{ subcomment.user.userprofile.avatar.url }}">
+													</div>
+												</a>
+												<div class="media-body">
+													<h4 class="media-heading">{{ subcomment.user.userprofile.nickname }}&nbsp;回复：{{ subcomment.reply_to_user_id|get_nickname }}</h4>
+													{#										<h6 class="pull-left text-muted">repaly to lufangfan</h6>#}
+													<h6 class="pull-right text-muted">{{ subcomment.date_publish|date:"Y-m-d H:i:s" }}</h6>
+
+													<p>{{ subcomment.content }}</p>
+
+													<div class="media-footer">
+														{% ifnotequal request.user subcomment.user %}
+															<a href="#" class="btn btn-info btn-simple "
+															   onclick="reply(this);return false;"> <i
+																	class="fa fa-reply"></i>
+																Reply</a>
+														{% endifnotequal %}
+														<a href="#" class="btn btn-danger btn-simple pull-right">
+															<i class="fa fa-heart"></i> 243
+														</a>
+													</div>
+
+													<div class="media media-post" style="display: none;">
+														<a class="pull-left author" href="#">
+															<div class="avatar">
+																<img class="media-object" alt="64x64"
+																     src="{{ request.user.userprofile.avatar.url }}">
+															</div>
+														</a>
+														<div class="media-body">
+											<textarea class="form-control" id="comment" placeholder="评论一句，知音难寻～"
+											          rows="6"></textarea>
+															<div class="media-footer">
+																<a href="#"
+																   class="btn btn-info btn-round btn-fill btn-wd pull-right"
+																   onclick="reply_user(this);return false;">Post
+																	Comment</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div> <!-- end media -->
+
+											{% endif %}
+										{% endfor %}
 									</div>
 								</div> <!-- end media -->
-							</div>
-						</div> <!-- end media -->
+							{% endif %}
+						{% endfor %}
+						<!--  Comment                    -->
+
 						<div class="media media-post">
 							<a class="pull-left author" href="#">
 								<div class="avatar">
@@ -171,7 +272,7 @@
 								          rows="6"></textarea>
 								<div class="media-footer">
 									<a href="#" class="btn btn-info btn-round btn-fill btn-wd pull-right"
-									   onclick="post_comment();return false;">Post
+									   onclick="post_comment(this);return false;">Post
 										Comment</a>
 								</div>
 							</div>
@@ -187,16 +288,16 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("div img").addClass('img-responsive');
-			$("div img").attr('style', 'height:auto');
-			$("div img").wrap("<a></a>");
-			$("div img").each(function () {
+			$("#article-content img").addClass('img-responsive');
+			$("#article-content img").attr('style', 'height:auto');
+			$("#article-content img").wrap("<a></a>");
+			$("#article-content img").each(function () {
 				$(this).wrap("<a target='_Blank' href=" + $(this).attr("src") + "></a>");
 			});
 		});
 
-		function post_comment() {
-			var comment = $('#comment').val();
+		function post_comment(obj) {
+			var comment = $(obj).parent().prev().val();
 			if (/[^\s]+/.test(comment)) {
 				$.ajax({
 					//提交数据的类型 POST GET
@@ -218,36 +319,36 @@
 					},
 					//成功返回之后调用的函数
 					success: function (data) {
-						{#						console.log(data);#}
-						{#						console.log(data['comment']['nickname']);#}
+												console.log(data);
+												console.log(data['comment']['nickname']);
 						var nickname = data['comment']['nickname'];
 						var avatar = data['comment']['avatar'];
 						var content = data['comment']['content'];
 						var date_publish = data['comment']['date_publish'].split('T')[0] + ' ' + data['comment']['date_publish'].split('T')[1].split('.')[0];
 						{#						console.log(date_publish);#}
 						var comment_html = '<div class="media">' +
-							'<a class="pull-left" href="#">' +
-							'<div class="avatar">' +
-							'<img class="media-object" src=" ' + avatar + ' " alt="...">' +
-							'</div>' +
-							'</a>' +
-							'<div class="media-body">' +
-							'<h4 class="media-heading">' + nickname + '</h4>' +
-							'<h6 class="pull-right text-muted">' + date_publish + '</h6>' +
+								'<a class="pull-left" href="#">' +
+								'<div class="avatar">' +
+								'<img class="media-object" src=" ' + avatar + ' " alt="...">' +
+								'</div>' +
+								'</a>' +
+								'<div class="media-body">' +
+								'<h4 class="media-heading">' + nickname + '</h4>' +
+								'<h6 class="pull-right text-muted">' + date_publish + '</h6>' +
 
-							'<p>' + content + '</p>' +
+								'<p>' + content + '</p>' +
 
-							'<div class="media-footer">' +
+								'<div class="media-footer">' +
 
-							'<a href="#" class="btn btn-danger btn-simple pull-right">' +
-							'<i class="fa fa-heart"></i> 243' +
-							'</a>' +
-							'</div>' +
-							'</div>' +
-							'</div>';
+								'<a href="#" class="btn btn-danger btn-simple pull-right">' +
+								'<i class="fa fa-heart"></i> 243' +
+								'</a>' +
+								'</div>' +
+								'</div>' +
+								'</div>';
 						{#						console.log(comment_html);#}
-						$(comment_html).insertBefore('.media-post');
-						$("#comment").val('');
+						$(comment_html).insertBefore($(obj).parent().parent().parent());
+						$(obj).parent().prev().val('');
 						{#						console.log('???');#}
 					},
 					//调用执行后调用的函数
@@ -265,8 +366,161 @@
 			}
 		}
 
-		function replay(obj) {
+		function reply(obj) {
 			$(obj).parent().next().toggle();
 		}
+
+		function reply_comment(obj) {
+			var comment = $(obj).parent().prev().val();
+			var supercomment_id = $(obj).parent().parent().parent().parent().parent().attr("id");
+			alert(comment+supercomment_id);
+			if (/[^\s]+/.test(comment)) {
+				$.ajax({
+					//提交数据的类型 POST GET
+					type: "POST",
+					//提交的网址
+					url: "{% url 'comment_submit' %}",
+					//提交的数据
+					data: {
+						comment: comment,
+						user_id: {{ request.user.id }},
+						article_id: {{ article.id }},
+						csrfmiddlewaretoken: '{{ csrf_token }}',
+						supercomment_id: supercomment_id
+					},
+					//返回数据的格式
+					datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+					//在请求之前调用的函数
+					beforeSend: function () {
+
+					},
+					//成功返回之后调用的函数
+					success: function (data) {
+						console.log(data);
+						console.log(data['comment']['nickname']);
+						var nickname = data['comment']['nickname'];
+						var avatar = data['comment']['avatar'];
+						var content = data['comment']['content'];
+						var date_publish = data['comment']['date_publish'].split('T')[0] + ' ' + data['comment']['date_publish'].split('T')[1].split('.')[0];
+						console.log(date_publish);
+						var comment_html = '<div class="media">' +
+								'<a class="pull-left" href="#">' +
+								'<div class="avatar">' +
+								'<img class="media-object" src=" ' + avatar + ' " alt="...">' +
+								'</div>' +
+								'</a>' +
+								'<div class="media-body">' +
+								'<h4 class="media-heading">' + nickname + '</h4>' +
+								{#										<h6 class="pull-left text-muted">repaly to lufangfan</h6>#}
+								'<h6 class="pull-right text-muted">' + date_publish + '</h6>' +
+
+								'<p>' + content + '</p>' +
+
+								'<div class="media-footer">' +
+								'<a href="#" class="btn btn-danger btn-simple pull-right">' +
+								'<i class="fa fa-heart"></i> 43' +
+								'</a>' +
+								'</div>' +
+								'</div>' +
+								'</div>';
+						<!-- end media -->
+						console.log(comment_html);
+						$(comment_html).insertAfter($(obj).parent().parent().parent());
+						$(obj).parent().prev().val('');
+						$(obj).parent().parent().parent().hide();
+						console.log('???');
+					},
+					//调用执行后调用的函数
+					complete: function (XMLHttpRequest, textStatus) {
+
+					},
+					//调用出错执行的函数
+					error: function () {
+						//请求出错处理
+						Lobibox.alert('error', {msg: "服务器异常，请稍后再试！"});
+					}
+				});
+			} else {
+				Lobibox.alert('warning', {msg: "sao年，你啥都没说啊！"});
+			}
+		}
+
+		function reply_user(obj) {
+			var comment = $(obj).parent().prev().val();
+			var supercomment_id = $(obj).parent().parent().parent().parent().parent().parent().parent().attr("id");
+			var reply_user_id = $(obj).parent().parent().parent().parent().parent().attr("name");
+			var reply_user_name = $(obj).parent().parent().parent().prev().prev().prev().prev().text();
+			if (/[^\s]+/.test(comment)) {
+				$.ajax({
+					//提交数据的类型 POST GET
+					type: "POST",
+					//提交的网址
+					url: "{% url 'comment_submit' %}",
+					//提交的数据
+					data: {
+						comment: comment,
+						user_id: {{ request.user.id }},
+						article_id: {{ article.id }},
+						csrfmiddlewaretoken: '{{ csrf_token }}',
+						supercomment_id: supercomment_id,
+						reply_user_id: reply_user_id
+					},
+					//返回数据的格式
+					datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+					//在请求之前调用的函数
+					beforeSend: function () {
+
+					},
+					//成功返回之后调用的函数
+					success: function (data) {
+						console.log(data);
+						console.log(data['comment']['nickname']);
+						var nickname = data['comment']['nickname'];
+						var avatar = data['comment']['avatar'];
+						var content = data['comment']['content'];
+						var date_publish = data['comment']['date_publish'].split('T')[0] + ' ' + data['comment']['date_publish'].split('T')[1].split('.')[0];
+						console.log(date_publish);
+						var comment_html = '<div class="media">' +
+								'<a class="pull-left" href="#">' +
+								'<div class="avatar">' +
+								'<img class="media-object" src=" ' + avatar + ' " alt="...">' +
+								'</div>' +
+								'</a>' +
+								'<div class="media-body">' +
+								'<h4 class="media-heading">' + nickname + '回复：' + reply_user_name + '</h4>' +
+								{#										<h6 class="pull-left text-muted">repaly to lufangfan</h6>#}
+								'<h6 class="pull-right text-muted">' + date_publish + '</h6>' +
+
+								'<p>' + content + '</p>' +
+
+								'<div class="media-footer">' +
+								'<a href="#" class="btn btn-danger btn-simple pull-right">' +
+								'<i class="fa fa-heart"></i> 43' +
+								'</a>' +
+								'</div>' +
+								'</div>' +
+								'</div>';
+						<!-- end media -->
+						console.log(comment_html);
+						$(comment_html).insertAfter($(obj).parent().parent().parent().parent().parent());
+						$(obj).parent().prev().val('');
+						$(obj).parent().parent().parent().hide();
+						console.log('???');
+					},
+					//调用执行后调用的函数
+					complete: function (XMLHttpRequest, textStatus) {
+
+					},
+					//调用出错执行的函数
+					error: function () {
+						//请求出错处理
+						Lobibox.alert('error', {msg: "服务器异常，请稍后再试！"});
+					}
+				});
+			} else {
+				Lobibox.alert('warning', {msg: "sao年，你啥都没说啊！"});
+			}
+		}
+
 	</script>
 {% endblock %}
