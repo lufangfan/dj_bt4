@@ -24,7 +24,7 @@ SECRET_KEY = '@p26a%@2g5$3&+t8&@fq3n8-$u$zcsu)yp%q1*lzrw$ij_6e^%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['132.232.47.178']
+ALLOWED_HOSTS = ['132.232.47.178', 'lufangfan.xyz']
 
 # Application definition
 
