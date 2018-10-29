@@ -138,10 +138,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 
 )
-STATIC_ROOT = "/var/www/lufangfan.xyz/static/"
+STATIC_ROOT = "/home/ubuntu/www/lufangfan.xyz/static/"
 #  MyProject.settings.py 里面设置MEDIA_ROOT and MEDIA_URL
 
-MEDIA_ROOT = "/var/www/lufangfan.xyz/media/"
+MEDIA_ROOT = "/home/ubuntu/www/lufangfan.xyz/media/"
 MEDIA_URL = '/media/'
 
 CKEDITOR_UPLOAD_PATH = "article_images"
