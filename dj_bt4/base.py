@@ -21,11 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '@p26a%@2g5$3&+t8&@fq3n8-$u$zcsu)yp%q1*lzrw$ij_6e^%'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['132.232.47.178', 'lufangfan.xyz']
-
 # Application definition
 
 PREREQ_APPS = [
@@ -134,14 +129,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    
     os.path.join(BASE_DIR, 'static'),
-
 )
-STATIC_ROOT = "/home/ubuntu/www/lufangfan.xyz/static/"
-#  MyProject.settings.py 里面设置MEDIA_ROOT and MEDIA_URL
 
-MEDIA_ROOT = "/home/ubuntu/www/lufangfan.xyz/media/"
 MEDIA_URL = '/media/'
 
 CKEDITOR_UPLOAD_PATH = "article_images"
@@ -177,7 +167,7 @@ EMAIL_PORT = 25
 # 发送邮件的邮箱
 EMAIL_HOST_USER = 'lufangfan_py@163.com'
 # 在邮箱中设置的客户端授权密码
-EMAIL_HOST_PASSWORD = 'lff199248'
+EMAIL_HOST_PASSWORD = '******'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # CKEDITOR 插件
@@ -216,7 +206,7 @@ CKEDITOR_CONFIGS = {
                 # put the name of your editor.ui.addButton here
                 'Preview',
                 'Maximize',
-
+            
             ]},
             {'name': 'Blockquote', 'items': ['CodeSnippet']},
         ],
@@ -230,7 +220,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
