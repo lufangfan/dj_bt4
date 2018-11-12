@@ -34,7 +34,8 @@ def blog_post(request, pk):
             sub_cms = Comment.objects.filter(supercomment_id=comment.id)
             cm.append(sub_cms)
             cms.append(cm)
-        context = {'article': article, 'user': request.user, 'comments': cms, 'article_author': UserProfile.objects.get(user=article.user), 'tags': Tag.objects.filter(article=article)}
+        article_author, is_crete = UserProfile.objects.get_or_create(user=article.user, defaults={'avatar': 'avatar/default_avatar.jpg', 'nickname': 'ETO首席执行官'})
+        context = {'article': article, 'user': request.user, 'comments': cms, 'article_author': article_author, 'tags': Tag.objects.filter(article=article)}
         print(cms)
         return render(request, 'blog/blog-post.html', context)
 
