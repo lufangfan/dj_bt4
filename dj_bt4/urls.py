@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', blog_page, name='home'),
     url(r'^test$', TemplateView.as_view(template_name='test.html'), name='landing_test'),
+    url(r'^resume$', TemplateView.as_view(template_name='resume.html'), name='resume'),
     url(r'^blog/', include('blog.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
