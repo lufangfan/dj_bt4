@@ -30,35 +30,37 @@
 	<div id="container">
 		<header class="header">
 			<div class="top-bar container-fluid">
-				<div class="actions">
-					<a class="btn hidden-xs" @click="changeLanguage"><i class="fa fa-language" aria-hidden="true"></i>
-						${ language }
-					</a>
-					<a class="btn hidden-xs" :href="'mailto:' + basicInfo.email"><i class="fa fa-paper-plane" aria-hidden="true"></i>
-						Hire Me
-					</a>
-					<a class="btn" href="#"><i class="fa fa-download" aria-hidden="true"></i> Download My Resume</a>
-				</div>
-				<!--//actions-->
-				<ul class="social list-inline">
-					<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-					<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-					<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-					<li><a href="#"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>
-					<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-				</ul>
-				<!--//social-->
+                <h1 style="text-align: center">纸上得来终觉浅，绝知此事要躬行</h1>
+{#				<div class="actions">#}
+{#					<a class="btn hidden-xs" @click="changeLanguage"><i class="fa fa-language" aria-hidden="true"></i>#}
+{#						${ language }#}
+{#					</a>#}
+{#					<a class="btn hidden-xs" :href="'mailto:' + basicInfo.email"><i class="fa fa-paper-plane" aria-hidden="true"></i>#}
+{#						Hire Me#}
+{#					</a>#}
+{#					<a class="btn" href="#"><i class="fa fa-download" aria-hidden="true"></i> Download My Resume</a>#}
+{#				</div>#}
+{#				<!--//actions-->#}
+{#				<ul class="social list-inline">#}
+{#					<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>#}
+{#					<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>#}
+{#					<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>#}
+{#					<li><a href="#"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>#}
+{#					<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>#}
+{#				</ul>#}
+{#				<!--//social-->#}
 			</div>
 			<!--//top-bar-->
 
 			<div class="intro">
 				<div class="container text-center">
-					<img class="profile-image" src="{% static 'resume/images/profile-image.png' %}" alt="">
+					<img class="profile-image" src="{% static 'resume/images/profile-avatar.jpeg' %}" alt="">
 					<h1 class="name">${ basicInfo.name }</h1>
 					<div class="title">${basicInfo.title}</div>
-					<div class="profile">
-						<p>${basicInfo.profileInfo}</p>
-					</div>
+					<div class="title">${basicInfo.edu}</div>
+					<div class="title">${basicInfo.age}</div>
+					<div class="title">${basicInfo.exe}</div>
+					<div class="title">${basicInfo.compensation}</div>
 					<!--//profile-->
 				</div>
 				<!--//container-->
@@ -70,7 +72,7 @@
 					<ul class="list-inline">
 						<li class="email"><i class="fa fa-envelope"></i><a :href="'mailto:' + basicInfo.email">${basicInfo.email}</a></li>
 						<li><i class="fa fa-phone"></i> <a :href="'tel:' + basicInfo.mobile">${basicInfo.mobile}</a></li>
-						<li class="website"><i class="fa fa-globe"></i><a :href="basicInfo.website" target="_blank">www.cnblogs.com</a></li>
+						<li class="website"><i class="fa fa-globe"></i><a :href="basicInfo.website" target="_blank">${basicInfo.website}</a></li>
 					</ul>
 				</div>
 				<!--//container-->
@@ -110,7 +112,7 @@
 									<div class="chart-theme-1 chart" :data-percent="topSkill.percent"><span>{{topSkill.percent}}</span>%</div>
 								</div>
 								<h4 class="skill-name">${topSkill.name}</h4>
-								<div class="level">${topSkill.level}</div>
+{#								<div class="level">${topSkill.level}</div>#}
 								<!--<div class="desc">${topSkill.desc}</div>-->
 							</div>
 							<!--//item-inner-->
@@ -120,14 +122,14 @@
 				</div>
 				<!--//top-skills-->
 
-				<!--
+
 				<div class="other-skills">
 					<h3 class="subtitle">Other Skills</h3>
 					<div class="misc-skills">
-						<span class="skill-tag" v-for="otherSkill in skills.otherSkills">{{otherSkill.name}}</span>
+						<span class="skill-tag" v-for="otherSkill in skills.otherSkills">${otherSkill.name}</span>
 					</div>
-				</div>-->
-				<!--//other-skills-->
+				</div>
+
 				
 				<div class="skill-items">
 					<div class="skill-item" v-for="skillItem in skills.skillItems">
@@ -143,7 +145,7 @@
 					<div class="item" v-for="work in experiences.workExperiences">
 						<div class="work-place">
 							<h3 class="place">${work.place}</h3>
-							<div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>{{work.location}}</div>
+							<div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>${work.location}</div>
 						</div>
 						<div class="job-meta">
 							<div class="title">${work.title}</div>
@@ -280,14 +282,130 @@
 		</div>
 		<!--//wrapper-->
 
-		<footer class="footer text-center">
-			<div class="container">
-				<small class="copyright">Copyright &copy; 2018.Brilliant All rights reserved. 
-					<a href="https://gitee.com/liuge1988/brilliant" target="_blank">${basicInfo.sourceCode}</a></small>
-					${basicInfo.authorTitle}:<a href="https://www.cnblogs.com/xifengxiaoma/" target="_blank">${basicInfo.authorValue}</a>
+		<footer class="footer footer-big footer-transparent" style="background-image: url('/static/images/galaxy_starfield.jpg');">
+		<div class="container">
+			<div class="row">
+				<h3  style="text-align:center;">人生若只如初见，何事秋风悲画扇</h3>
+{#				<div class="col-md-2">#}
+{#					<h5 class="title">Company</h5>#}
+{#					<nav>#}
+{#						<ul>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Home#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Find offers#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Discover Projects#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Our Portfolio#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									About Us#}
+{#								</a>#}
+{#							</li>#}
+{#						</ul>#}
+{#					</nav>#}
+{#				</div>#}
+{#				<div class="col-md-3 col-md-offset-1">#}
+{#					<h5 class="title"> Help and Support</h5>#}
+{#					<nav>#}
+{#						<ul>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Contact Us#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									How it works#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Terms & Conditions#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Company Policy#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									Money Back#}
+{#								</a>#}
+{#							</li>#}
+{#						</ul>#}
+{#					</nav>#}
+{#				</div>#}
+{#				<div class="col-md-3">#}
+{#					<h5 class="title">Follow us on</h5>#}
+{#					<nav>#}
+{#						<ul>#}
+{#							<li>#}
+{#								<a href="#" class="btn btn-social btn-facebook btn-simple">#}
+{#									<i class="fa fa-facebook-square"></i> Facebook#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#" class="btn btn-social btn-dribbble btn-simple">#}
+{#									<i class="fa fa-dribbble"></i> Dribbble#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#" class="btn btn-social btn-twitter btn-simple">#}
+{#									<i class="fa fa-twitter"></i> Twitter#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#" class="btn btn-social btn-reddit btn-simple">#}
+{#									<i class="fa fa-google-plus-square"></i> Google+#}
+{#								</a>#}
+{#							</li>#}
+{##}
+{#						</ul>#}
+{#					</nav>#}
+{#				</div>#}
+{#				<div class="col-md-3">#}
+{#					<h5 class="title">Latest News</h5>#}
+{#					<nav>#}
+{#						<ul>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									<i class="fa fa-twitter"></i> <b>Get Shit Done</b>#}
+{#									The best kit in the market is here, just give it a try and let us...#}
+{#									<hr class="hr-small">#}
+{#								</a>#}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="#">#}
+{#									<i class="fa fa-twitter"></i>#}
+{#									We've just been featured on <b> Awwwards Website</b>! Thank you everybody for...#}
+{#								</a>#}
+{#							</li>#}
+{##}
+{#						</ul>#}
+{#					</nav>#}
+{#				</div>#}
 			</div>
-			<!--//container-->
-		</footer>
+			<hr/>
+			<div class="copyright" style="text-align:center;">
+				&copy; 2018 Creative Lufangfan, made with love
+			</div>
+		</div>
+	</footer>
 
 	</div>
 
@@ -344,19 +462,19 @@
 						{# }#}
 						var data = window.localStorage.getItem(this.lang)
 						if(data != null) {
-							data = JSON.parse(data)
-							this.basicInfo = data.basicInfo
-							this.experiences = data.experiences
-							this.projects = data.projects
-							this.education = data.education
-							this.skills = data.skills
-							this.portfolio = data.portfolio
-							this.contact = data.contact
+							data = JSON.parse(data);
+							this.basicInfo = data.basicInfo;
+							this.experiences = data.experiences;
+							this.projects = data.projects;
+							this.education = data.education;
+							this.skills = data.skills;
+							this.portfolio = data.portfolio;
+							this.contact = data.contact;
 						}
 					}
 				},
 				mounted:function(){
-					this.changeLanguage()
+					this.changeLanguage();
 				}
 			});
 			vm.changeLanguage();
