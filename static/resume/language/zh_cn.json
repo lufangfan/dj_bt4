@@ -3,11 +3,11 @@ zh_cn({
 		"name": "鲁方帆 ♂男",
 		"title": "求职意向：Python后端开发",
 		"edu": "毕业院校：中国地质大学（武汉）",
-		"age": "年龄：27岁",
+		"age": "年龄：26岁",
 		"exe": "工作经验：三年半",
 		"compensation": "期望薪资：面议",
 		"email": "lufangfan_py@163.com",
-		"mobile": "18972861004",
+		"mobile": "18162322855",
 		"website": "http://www.lufangfan.xyz"
 	},
 	"experiences": {
@@ -50,7 +50,7 @@ zh_cn({
 			"time": "2018.2 — 至今",
 			"env": "Django + Apache + mod_wsgi + DjangoRESTframework + Bootstrap…",
 			"desc": "PPCinese在线教育平台基于Django框架搭建，集成Agora实现在线直播，利用DjangoRESTframework提供ios以及ipad端API。项目主要分为accounts、userprolife、campaign、scheduler、virtualclass、course几个模块。用户登录注册由django-allauth实现，支持google、facebook账号登录。accounts模块主要负责用户账户，充值、转账、课时消费、活动奖励等功能。campaign主要实现了每次开学，以及假期的促销活动功能。scheduler实现老师发布课程，学生预约上课，取消约课，删除已发布的课程，预占等功能。virtualclass主要负责实现在线上课，以及课程结束评分扣费等功能。course主要实现整个课程体系，以及课件、扩展课件、家庭作业等教学资源的上传、修改、评分等功能。项目中利用Django的signals进行模块解耦，国际化和本地化实现中英文双语，以及多时区友好展示。基于DjangoRESTframework给ios和ipad移动端提供符合restful风格的API。",
-			"responsibility": "作为后端开发工程师，参与PPChinese项目的开发，项目主基于Django框架搭建在线视频直播教育平台，实现学生与老师通过视频、课件、白板进行在线学习。项目开发过程中，参与系统的架构设计、调整和优化，参与相关需求的分析和讨论，完成相关功能模块的设计和编码，与产品、教研、测试进行良好的配合，完成项目的推进。"
+			"responsibility": "作为后端开发工程师，参与PPChinese项目的开发，项目主基于Django框架搭建在线视频直播教育平台，实现学生与老师通过视频、课件、白板进行在线学习。项目开发过程中，参与系统的调整和优化，参与相关需求的分析和讨论，完成相关功能模块的设计和编码，与产品、教研、测试进行良好的配合，完成项目的推进。"
 		}, {
 			"name": "研峰科技 | www.infsci.com",
 			"location": "北京",
